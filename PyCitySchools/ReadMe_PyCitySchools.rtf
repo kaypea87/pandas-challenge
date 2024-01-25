@@ -1,0 +1,1223 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 HelveticaNeue-Bold;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fmodern\fcharset0 Courier;\f4\fmodern\fcharset0 Courier-Oblique;\f5\fmodern\fcharset0 Courier-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;\red36\green43\blue141;
+\red13\green103\blue102;\red245\green245\blue245;\red15\green112\blue1;\red151\green0\blue255;\red169\green14\blue26;
+\red16\green121\blue2;\red208\green208\blue208;}
+{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;\cssrgb\c18824\c24706\c62353;
+\cssrgb\c0\c47451\c47451;\cssrgb\c96863\c96863\c96863;\cssrgb\c0\c50196\c0;\cssrgb\c66667\c13333\c100000;\cssrgb\c72941\c12941\c12941;
+\cssrgb\c0\c53333\c0;\cssrgb\c85098\c85098\c85098;}
+\margl1440\margr1440\vieww28600\viewh16380\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Module 4- PyCitySchools\
+\
+In this exercise, a set of data is provided by schools in a within a district along with student level data.\
+The analysis included constructing different cuts of the data to analyze the math and reading performance schools (including overall), and budget breakdown by school. \
+\
+\
+Below is the final code \
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 PyCity Schools Analysis\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b0\fs28 \cf0 \cb2 -In this analysis, the given data included information on 15 schools within a district and data for over 39k students that attend one of the schools in the district. For the student data, standarized test scores by student were provided.\cb1 \uc0\u8232 \cb2 -As the Chief Data Scientist for the school district, my role is to help the school board and mayor make strategic decisions regarding the schools budgets and priorities. -Using the given data , the following observations were made:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3 \cf0 \cb2 1) From a high level view, Charter schools had better average scores for individual math and reading categories compared to District schools. For overall passing rates, Charter schools had a significantly higher passing rate in comparison as well. In addition, all top five schools are Charter schools vs the bottom five that are District. From a strategic aspect, this is something that the school admin should focus on. Some suggestions would be to compare the curriculum to drill down to where modifications can be made for Distrit schools - this would be a start. But also it could be methods of teaching, which would also require additional training for teachers - a consideration that should be made for budget re-allocation, give the bottom five schools had the higher spending brackets than the top schools. \
+\
+2) Average reading scores by grade are higher than average math scores by grade for the dataset provided. In addition, from the overall scores from all students in the district, it is conclusive to state that the district admin should focus on improving math scores, drilling down to the subset of schools that need improvement as a strategic start, which will help bring up the overall district average scores. \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #import necessry files for analysis
+\f3\i0 \cf0 \cb1 \strokec3 \
+
+\f4\i \cf5 \cb6 \strokec5 #path to csv file and read
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+
+\f5\b \cf7 \cb6 \strokec7 import
+\f3\b0 \cf0 \strokec3  pandas 
+\f5\b \cf7 \strokec7 as
+\f3\b0 \cf0 \strokec3  pd\cb1 \
+
+\f5\b \cf7 \cb6 \strokec7 from
+\f3\b0 \cf0 \strokec3  pathlib 
+\f5\b \cf7 \strokec7 import
+\f3\b0 \cf0 \strokec3  Path\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #path to csv file and read
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 school_datafile 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  Path(\cf9 \strokec9 "Resources/schools_complete.csv"\cf0 \strokec3 )\cb1 \
+\cb6 school_df 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.read_csv(school_datafile)\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\cb6 student_datafile 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  Path(\cf9 \strokec9 "Resources/students_complete.csv"\cf0 \strokec3 )\cb1 \
+\cb6 student_df
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.read_csv(student_datafile)\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #combine two dataframes into one
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 combined_df 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.merge(student_df, school_df, how
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf9 \strokec9 "left"\cf0 \strokec3 , on
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3 [\cf9 \strokec9 "school_name"\cf0 \strokec3 , \cf9 \strokec9 "school_name"\cf0 \strokec3 ])\cb1 \
+\cb6 combined_df.head()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 District Summary\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #number of unique schools
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 school_total
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  \cf7 \strokec7 len\cf0 \strokec3 (combined_df[\cf9 \strokec9 'school_name'\cf0 \strokec3 ].unique())\cb1 \
+\cb6 school_total\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #Total students
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 student_total
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  \cf7 \strokec7 len\cf0 \strokec3 (student_df[\cf9 \strokec9 'Student ID'\cf0 \strokec3 ])\cb1 \
+\cb6 student_total\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #Total budget
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 total_budget 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_df[\cf9 \strokec9 'budget'\cf0 \strokec3 ].sum()\cb1 \
+\cb6 total_budget\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #Average math score
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 average_math_score 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  student_df[\cf9 \strokec9 'math_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 average_math_score\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #Average reading score
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 average_read_score 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  student_df[\cf9 \strokec9 'reading_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 average_read_score\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # percentage of students who passed math- code provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 passing_math_count 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "math_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 )].count()[\cf9 \strokec9 "student_name"\cf0 \strokec3 ]\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #passing_math_count
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\cb6 passing_math_percentage 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  passing_math_count 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3  student_total 
+\f5\b \cf8 \strokec8 *
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 100\cf0 \cb1 \strokec3 \
+\cb6 passing_math_percentage\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #percentage of students who passed reading
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 passing_reading_count 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "reading_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 )].count()[\cf9 \strokec9 "student_name"\cf0 \strokec3 ]\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #passing_reading_count
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\cb6 passing_reading_percentage 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  passing_reading_count 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3  student_total 
+\f5\b \cf8 \strokec8 *
+\f3\b0 \cf10 \strokec10 100\cf0 \cb1 \strokec3 \
+\cb6 passing_reading_percentage\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #percentage of students who passed reading and math - code provided 
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 passing_math_reading_count 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[\cb1 \
+\cb6     (combined_df[\cf9 \strokec9 "math_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 ) 
+\f5\b \cf8 \strokec8 &
+\f3\b0 \cf0 \strokec3  (combined_df[\cf9 \strokec9 "reading_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 )\cb1 \
+\cb6 ].count()[\cf9 \strokec9 "student_name"\cf0 \strokec3 ]\cb1 \
+\cb6 overall_passing_rate 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  passing_math_reading_count 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3  student_total 
+\f5\b \cf8 \strokec8 *
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 100\cf0 \cb1 \strokec3 \
+\cb6 overall_passing_rate\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #new DataFrame for the above calculations called district_summary
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 district_summary 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.DataFrame(\{\cf9 \strokec9 "Total Schools"\cf0 \strokec3 : [school_total],\cb1 \
+\cb6                                  \cf9 \strokec9 "Total Students"\cf0 \strokec3 :[student_total],\cb1 \
+\cb6                                  \cf9 \strokec9 "Total Budget"\cf0 \strokec3 : [total_budget],\cb1 \
+\cb6                                  \cf9 \strokec9 "Average Math Score"\cf0 \strokec3 : [average_math_score],\cb1 \
+\cb6                                  \cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 : [average_read_score],\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Math"\cf0 \strokec3 : [passing_math_percentage],\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 : [passing_reading_percentage],\cb1 \
+\cb6                                  \cf9 \strokec9 "Overall Passing"\cf0 \strokec3 : [overall_passing_rate]\cb1 \
+\cb6                                 \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #format cells -code provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 district_summary[\cf9 \strokec9 "Total Students"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  district_summary[\cf9 \strokec9 "Total Students"\cf0 \strokec3 ].map(\cf9 \strokec9 "\{:,\}"\cf0 \strokec3 .format)\cb1 \
+\cb6 district_summary[\cf9 \strokec9 "Total Budget"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  district_summary[\cf9 \strokec9 "Total Budget"\cf0 \strokec3 ].map(\cf9 \strokec9 "$\{:,.2f\}"\cf0 \strokec3 .format)\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\cb6 district_summary\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 School Summary\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #unique set of school names 
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 school_types 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_df.set_index([\cf9 \strokec9 "school_name"\cf0 \strokec3 ])[\cf9 \strokec9 "type"\cf0 \strokec3 ]\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #count students per school
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 student_perschool 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[\cf9 \strokec9 'school_name'\cf0 \strokec3 ].value_counts()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #total school budget and per capita spending per school
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 per_school_budget 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'budget'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 per_school_capita 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_budget 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3 student_perschool\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #average test scores per school
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 per_school_math 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'math_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 per_school_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'reading_score'\cf0 \strokec3 ].mean()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # the number of students per school with math scores of 70 or higher
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 students_passing_math 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[combined_df[\cf9 \strokec9 "math_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 ] \cb1 \
+\cb6 school_students_passing_math 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  students_passing_math.groupby(\cf9 \strokec9 'school_name'\cf0 \strokec3 ).size()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # the number of students per school with reading scores of 70 or higher
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 students_passing_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3 combined_df[combined_df[\cf9 \strokec9 "reading_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 ]\cb1 \
+\cb6 school_students_passing_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  students_passing_reading.groupby(\cf9 \strokec9 'school_name'\cf0 \strokec3 ).size()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # calculate the number of students per school that passed both math and reading with scores of 70 or higher- code was provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 students_passing_math_and_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[\cb1 \
+\cb6     (combined_df[\cf9 \strokec9 "reading_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 ) 
+\f5\b \cf8 \strokec8 &
+\f3\b0 \cf0 \strokec3  (combined_df[\cf9 \strokec9 "math_score"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 >=
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 70\cf0 \strokec3 )\cb1 \
+\cb6 ]\cb1 \
+\cb6 school_students_passing_math_and_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  students_passing_math_and_reading.groupby([\cf9 \strokec9 "school_name"\cf0 \strokec3 ]).size()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # calculate the passing rates - code was provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 per_school_passing_math 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_students_passing_math 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3  student_perschool  
+\f5\b \cf8 \strokec8 *
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 100\cf0 \cb1 \strokec3 \
+\cb6 per_school_passing_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_students_passing_reading 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3  student_perschool  
+\f5\b \cf8 \strokec8 *
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 100\cf0 \cb1 \strokec3 \
+\cb6 overall_passing_rate 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_students_passing_math_and_reading 
+\f5\b \cf8 \strokec8 /
+\f3\b0 \cf0 \strokec3  student_perschool  
+\f5\b \cf8 \strokec8 *
+\f3\b0 \cf0 \strokec3  \cf10 \strokec10 100\cf0 \cb1 \strokec3 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #DataFrame called `per_school_summary` with columns for the calculations above
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 per_school_summary 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.DataFrame(\{\cf9 \strokec9 "School Type"\cf0 \strokec3 : school_types,\cb1 \
+\cb6                                    \cf9 \strokec9 "Total Students"\cf0 \strokec3 : student_perschool,\cb1 \
+\cb6                                    \cf9 \strokec9 "Total School Budget"\cf0 \strokec3 : per_school_budget,\cb1 \
+\cb6                                    \cf9 \strokec9 "Per Student Budget"\cf0 \strokec3  : per_school_capita,\cb1 \
+\cb6                                    \cf9 \strokec9 "Average Math Score"\cf0 \strokec3  : per_school_math,\cb1 \
+\cb6                                    \cf9 \strokec9 "Average Reading Score"\cf0 \strokec3  : per_school_reading,\cb1 \
+\cb6                                    \cf9 \strokec9 "% Passing Math"\cf0 \strokec3 : per_school_passing_math,\cb1 \
+\cb6                                    \cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 : per_school_passing_reading,\cb1 \
+\cb6                                    \cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 : overall_passing_rate\cb1 \
+\cb6                                   \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Formatting
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 per_school_summary[\cf9 \strokec9 "Total School Budget"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary[\cf9 \strokec9 "Total School Budget"\cf0 \strokec3 ].map(\cf9 \strokec9 "$\{:,.2f\}"\cf0 \strokec3 .format)\cb1 \
+\cb6 per_school_summary[\cf9 \strokec9 "Per Student Budget"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary[\cf9 \strokec9 "Per Student Budget"\cf0 \strokec3 ].map(\cf9 \strokec9 "$\{:,.2f\}"\cf0 \strokec3 .format)\cb1 \
+\cb6 per_school_summary\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Highest-Performing Schools (by % Overall Passing)\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # schools sorted by `% Overall Passing` in descending order and display the top 5 rows
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 top_schools 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.sort_values([\cf9 \strokec9 '% Overall Passing'\cf0 \strokec3 ], ascending
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3 [
+\f5\b \cf7 \strokec7 False
+\f3\b0 \cf0 \strokec3 ])\cb1 \
+\cb6 top_schools.head(\cf10 \strokec10 5\cf0 \strokec3 )\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Bottom Performing Schools (By % Overall Passing)\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # schools sorted by `% Overall Passing` in ascending order and display the top 5 rows
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 bottom_schools 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.sort_values([\cf9 \strokec9 '% Overall Passing'\cf0 \strokec3 ], ascending
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3 [
+\f5\b \cf7 \strokec7 True
+\f3\b0 \cf0 \strokec3 ])\cb1 \
+\cb6 bottom_schools.head(\cf10 \strokec10 5\cf0 \strokec3 )\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Math Scores by Grade\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #separate the data by grade, this code was provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 ninth_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "9th"\cf0 \strokec3 )]\cb1 \
+\cb6 tenth_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "10th"\cf0 \strokec3 )]\cb1 \
+\cb6 eleventh_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "11th"\cf0 \strokec3 )]\cb1 \
+\cb6 twelfth_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "12th"\cf0 \strokec3 )]\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Group by `school_name` and take the mean of the `math_score` column for each
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 ninth_grade_math_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  ninth_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'math_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 tenth_grader_math_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  tenth_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'math_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 eleventh_grader_math_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  eleventh_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'math_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 twelfth_grader_math_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  twelfth_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'math_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Combine each of the scores above into single DataFrame called `math_scores_by_grade`
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 math_scores_by_grade 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.DataFrame(\{\cf9 \strokec9 "9th"\cf0 \strokec3 : ninth_grade_math_scores,\cb1 \
+\cb6                                      \cf9 \strokec9 "10th"\cf0 \strokec3  :tenth_grader_math_scores,\cb1 \
+\cb6                                      \cf9 \strokec9 "11th"\cf0 \strokec3 : eleventh_grader_math_scores,\cb1 \
+\cb6                                      \cf9 \strokec9 "12th"\cf0 \strokec3 :twelfth_grader_math_scores\cb1 \
+\cb6                                   \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Minor data wrangling
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 math_scores_by_grade.index.name 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  
+\f5\b \cf7 \strokec7 None
+\f3\b0 \cf0 \cb1 \strokec3 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Display the DataFrame
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 math_scores_by_grade\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Reading Score by Grade\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #separate the data by grade, this code was provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 ninth_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "9th"\cf0 \strokec3 )]\cb1 \
+\cb6 tenth_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "10th"\cf0 \strokec3 )]\cb1 \
+\cb6 eleventh_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "11th"\cf0 \strokec3 )]\cb1 \
+\cb6 twelfth_graders 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  combined_df[(combined_df[\cf9 \strokec9 "grade"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 ==
+\f3\b0 \cf0 \strokec3  \cf9 \strokec9 "12th"\cf0 \strokec3 )]\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Group by `school_name` and take the mean of the the `reading_score` column for each.
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 ninth_grade_reading_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  ninth_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'reading_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 tenth_grader_reading_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  tenth_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'reading_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 eleventh_grader_reading_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  eleventh_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'reading_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 twelfth_grader_reading_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  twelfth_graders.groupby([\cf9 \strokec9 'school_name'\cf0 \strokec3 ])[\cf9 \strokec9 'reading_score'\cf0 \strokec3 ].mean()\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Combine each of the scores above into single DataFrame called `reading_scores_by_grade`
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 reading_scores_by_grade 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.DataFrame(\{\cf9 \strokec9 "9th"\cf0 \strokec3 : ninth_grade_reading_scores,\cb1 \
+\cb6                                      \cf9 \strokec9 "10th"\cf0 \strokec3  :tenth_grader_reading_scores,\cb1 \
+\cb6                                      \cf9 \strokec9 "11th"\cf0 \strokec3 : eleventh_grader_reading_scores,\cb1 \
+\cb6                                      \cf9 \strokec9 "12th"\cf0 \strokec3 :twelfth_grader_reading_scores\cb1 \
+\cb6                                   \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Minor data wrangling
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 reading_scores_by_grade 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  reading_scores_by_grade[[\cf9 \strokec9 "9th"\cf0 \strokec3 , \cf9 \strokec9 "10th"\cf0 \strokec3 , \cf9 \strokec9 "11th"\cf0 \strokec3 , \cf9 \strokec9 "12th"\cf0 \strokec3 ]]\cb1 \
+\cb6 reading_scores_by_grade.index.name 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  
+\f5\b \cf7 \strokec7 None
+\f3\b0 \cf0 \cb1 \strokec3 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Display the DataFrame
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 reading_scores_by_grade\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Scores by School Spending\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Establish the bins 
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 spending_bins 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  [\cf10 \strokec10 0\cf0 \strokec3 , \cf10 \strokec10 585\cf0 \strokec3 , \cf10 \strokec10 630\cf0 \strokec3 , \cf10 \strokec10 645\cf0 \strokec3 , \cf10 \strokec10 680\cf0 \strokec3 ]\cb1 \
+\cb6 labels 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  [\cf9 \strokec9 "<$585"\cf0 \strokec3 , \cf9 \strokec9 "$585-630"\cf0 \strokec3 , \cf9 \strokec9 "$630-645"\cf0 \strokec3 , \cf9 \strokec9 "$645-680"\cf0 \strokec3 ]\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Create a copy of the school summary since it has the "Per Student Budget" 
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 school_spending_df 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.copy()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Use `pd.cut` to categorize spending based on the bins.
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 school_spending_df[\cf9 \strokec9 "Spending Ranges (Per Student)"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.cut(per_school_capita, \cb1 \
+\cb6                                                             spending_bins,labels 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  labels)\cb1 \
+\cb6 school_spending_df\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 #  Calculate averages for the desired columns, code provided 
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 spending_math_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_spending_df.groupby([\cf9 \strokec9 "Spending Ranges (Per Student)"\cf0 \strokec3 ])[\cf9 \strokec9 "Average Math Score"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 spending_reading_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_spending_df.groupby([\cf9 \strokec9 "Spending Ranges (Per Student)"\cf0 \strokec3 ])[\cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 spending_passing_math 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_spending_df.groupby([\cf9 \strokec9 "Spending Ranges (Per Student)"\cf0 \strokec3 ])[\cf9 \strokec9 "% Passing Math"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 spending_passing_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_spending_df.groupby([\cf9 \strokec9 "Spending Ranges (Per Student)"\cf0 \strokec3 ])[\cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 overall_passing_spending 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  school_spending_df.groupby([\cf9 \strokec9 "Spending Ranges (Per Student)"\cf0 \strokec3 ])[\cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 ].mean()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Assemble into DataFrame
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 spending_summary 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.DataFrame(\{\cf9 \strokec9 "Average Math Score"\cf0 \strokec3 : spending_math_scores,\cb1 \
+\cb6                                  \cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 :spending_reading_scores,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Math"\cf0 \strokec3  : spending_passing_math,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 : spending_passing_reading,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 : overall_passing_spending\cb1 \
+\cb6                                 \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Display results
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 spending_summary\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Scores by School Size\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Establish the bins.
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 size_bins 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  [\cf10 \strokec10 0\cf0 \strokec3 , \cf10 \strokec10 1000\cf0 \strokec3 , \cf10 \strokec10 2000\cf0 \strokec3 , \cf10 \strokec10 5000\cf0 \strokec3 ]\cb1 \
+\cb6 labels 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  [\cf9 \strokec9 "Small (<1000)"\cf0 \strokec3 , \cf9 \strokec9 "Medium (1000-2000)"\cf0 \strokec3 , \cf9 \strokec9 "Large (2000-5000)"\cf0 \strokec3 ]\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Categorize the spending based on the bins
+\f3\i0 \cf0 \cb1 \strokec3 \
+
+\f4\i \cf5 \cb6 \strokec5 # Use `pd.cut` on the "Total Students" column of the `per_school_summary` DataFrame.
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\cb6 per_school_summary[\cf9 \strokec9 "School Size"\cf0 \strokec3 ] 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.cut(student_perschool, size_bins,labels 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  labels)\cb1 \
+\cb6 per_school_summary\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Calculate averages for the desired columns, code provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 size_math_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Size"\cf0 \strokec3 ])[\cf9 \strokec9 "Average Math Score"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 size_reading_scores 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Size"\cf0 \strokec3 ])[\cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 size_passing_math 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Size"\cf0 \strokec3 ])[\cf9 \strokec9 "% Passing Math"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 size_passing_reading 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Size"\cf0 \strokec3 ])[\cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 size_overall_passing 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Size"\cf0 \strokec3 ])[\cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 ].mean()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Create a DataFrame called `size_summary` that breaks down school performance based on school size (small, medium, or large).
+\f3\i0 \cf0 \cb1 \strokec3 \
+
+\f4\i \cf5 \cb6 \strokec5 # Use the scores above to create a new DataFrame called `size_summary`
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 size_summary 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3   pd.DataFrame(\{\cf9 \strokec9 "Average Math Score"\cf0 \strokec3 : size_math_scores,\cb1 \
+\cb6                                  \cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 :size_reading_scores,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Math"\cf0 \strokec3  : size_passing_math,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 : size_passing_reading,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 : size_overall_passing\cb1 \
+\cb6                                 \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Display results
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 size_summary\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf0 \cb2 \strokec3 Scores by School Type\cb1 \
+\pard\pardeftab720\qr\partightenfactor0
+
+\f3\b0\fs28 \cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb11 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Group the per_school_summary DataFrame by "School Type" and average the results, code provided
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 average_math_score_by_type 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Type"\cf0 \strokec3 ])[\cf9 \strokec9 "Average Math Score"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 average_reading_score_by_type 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Type"\cf0 \strokec3 ])[\cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 average_percent_passing_math_by_type 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Type"\cf0 \strokec3 ])[\cf9 \strokec9 "% Passing Math"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 average_percent_passing_reading_by_type 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Type"\cf0 \strokec3 ])[\cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 ].mean()\cb1 \
+\cb6 average_percent_overall_passing_by_type 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  per_school_summary.groupby([\cf9 \strokec9 "School Type"\cf0 \strokec3 ])[\cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 ].mean()\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb11 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Assemble the new data by type into a DataFrame called `type_summary`
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 type_summary 
+\f5\b \cf8 \strokec8 =
+\f3\b0 \cf0 \strokec3  pd.DataFrame(\{\cf9 \strokec9 "Average Math Score"\cf0 \strokec3 : average_math_score_by_type,\cb1 \
+\cb6                                 \cf9 \strokec9 "Average Reading Score"\cf0 \strokec3 :average_reading_score_by_type,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Math"\cf0 \strokec3  : average_percent_passing_math_by_type,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Passing Reading"\cf0 \strokec3 : average_percent_passing_reading_by_type,\cb1 \
+\cb6                                  \cf9 \strokec9 "% Overall Passing"\cf0 \strokec3 : average_percent_overall_passing_by_type\cb1 \
+\cb6                                 \})\cb1 \
+\cb6 \uc0\u8203 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\i \cf5 \cb6 \strokec5 # Display results
+\f3\i0 \cf0 \cb1 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 type_summary\cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qr\partightenfactor0
+\cf4 \cb2 \strokec4 In\'a0[\'a0]:\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \strokec3 \
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb6 \uc0\u8203 \cb1 \
+\
+\pard\pardeftab720\qr\partightenfactor0
+\cf0 \
+}
